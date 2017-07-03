@@ -2,7 +2,10 @@ package com.github.javahao.base;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.github.javahao.util.Container;
+import com.github.javahao.util.IDUtil;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +14,7 @@ import java.util.List;
  * Created by javahao on 2017/6/19.
  * auth：JavaHao
  */
-public abstract class BaseBean<T> {
+public abstract class BaseBean<T> implements Serializable {
     private String id;
     private List<String> idList;
     private String creatorId;
@@ -30,8 +33,15 @@ public abstract class BaseBean<T> {
         pattern = "yyyy-MM-dd HH:mm:ss"
     )
     private Date modifiedAt;
-    protected void preSave(){}
-    protected void preUpdate(){}
+    public void preSave(){
+        this.id= IDUtil.createUUID();
+        this.creatorId= Container.getUserId();
+        this.createdAt=new Date();
+    }
+    public void preUpdate(){
+        this.modifierId= Container.getUserId();
+        this.modifiedAt=new Date();
+    }
 
     public String getId() {
         return id;

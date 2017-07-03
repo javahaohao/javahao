@@ -100,11 +100,13 @@ public class ZipUtil {
 	}
 
 	/**
+	 * @param file 压缩文件
+	 * @param flag 标识
 	 * @param baseDir
 	 *            所要压缩的目录名（包含绝对路径）
 	 * @param objFileName
 	 *            压缩后的文件名
-	 * @param checkfile
+	 * @param checkfile 检查文件
 	 *            
 	 * @throws Exception
 	 *             file 为指定要打包的文件 如果指定了 则其他参数flag、checkfile无效

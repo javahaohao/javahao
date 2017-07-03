@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 /**
@@ -23,7 +22,7 @@ import java.util.Arrays;
  * Created by javahao on 2017/6/19.
  * auth：JavaHao
  */
-public abstract class BaseController<T extends BaseBean,S extends BaseService> {
+public abstract class BaseController<T extends BaseBean,S extends Service> {
     @Autowired
     protected S s;
 
@@ -73,14 +72,13 @@ public abstract class BaseController<T extends BaseBean,S extends BaseService> {
      * 按照分页查询数据
      * @param model
      * @param t
-     * @param request
      * @return
      * @throws CRUDException
      */
     @Permission(value = "view")
     @RequestMapping("/page")
-    public String page(Model model, T t, HttpServletRequest request) throws CRUDException {
-        model.addAttribute("list",s.page(t,request));
+    public String page(Model model, T t) throws CRUDException {
+        model.addAttribute("list",s.page(t));
         listCommon(model,t);
         return model()+"/list";
     }
@@ -88,15 +86,14 @@ public abstract class BaseController<T extends BaseBean,S extends BaseService> {
     /**
      * 按照分页查询json数据
      * @param t
-     * @param request
      * @return
      * @throws CRUDException
      */
     @Permission(value = "view")
     @RequestMapping("/page/json")
     @ResponseBody
-    public Page page(T t, HttpServletRequest request) throws CRUDException {
-        return s.page(t,request);
+    public Page page(T t) throws CRUDException {
+        return s.page(t);
     }
 
     /**

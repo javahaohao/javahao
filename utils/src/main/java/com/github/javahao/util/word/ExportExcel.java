@@ -301,6 +301,7 @@ public class ExportExcel {
 	 * @param column 添加列号
 	 * @param val 添加值
 	 * @param align 对齐方式（1：靠左；2：居中；3：靠右）
+	 * @param fieldType 字段类型
 	 * @return 单元格对象
 	 */
 	public Cell addCell(Row row, int column, Object val, int align, Class<?> fieldType){
@@ -341,7 +342,9 @@ public class ExportExcel {
 
 	/**
 	 * 添加数据（通过annotation.ExportField添加数据）
-	 * @return list 数据列表
+	 * @param list 参数
+	 * @param <E> 泛型
+	 * @return 数据列表
 	 */
 	public <E> ExportExcel setDataList(List<E> list){
 		for (E e : list){
@@ -378,6 +381,8 @@ public class ExportExcel {
 	/**
 	 * 输出数据流
 	 * @param os 输出数据流
+	 * @return 返回导出对象
+	 * @throws IOException 输出流异常
 	 */
 	public ExportExcel write(OutputStream os) throws IOException{
 		wb.write(os);
@@ -387,6 +392,9 @@ public class ExportExcel {
 	/**
 	 * 输出到客户端
 	 * @param fileName 输出文件名
+	 * @param   response 响应
+	 * @return 返回导出对象
+	 * @throws IOException 输出流异常
 	 */
 	public ExportExcel write(String fileName,HttpServletResponse response) throws IOException{
 		response.reset();
@@ -399,8 +407,10 @@ public class ExportExcel {
 	/**
 	 * 输出到文件
 	 * @param name 输出文件名
+	 * @return 返回导出对象
+	 * @throws IOException 输出流异常
 	 */
-	public ExportExcel writeFile(String name) throws FileNotFoundException, IOException{
+	public ExportExcel writeFile(String name) throws IOException{
 		FileOutputStream os = new FileOutputStream(name);
 		this.write(os);
 		return this;
@@ -408,47 +418,12 @@ public class ExportExcel {
 	
 	/**
 	 * 清理临时文件
+	 * @return 返回导出对象
 	 */
 	public ExportExcel dispose(){
 		wb.dispose();
 		return this;
 	}
 	
-//	/**
-//	 * 导出测试
-//	 */
-//	public static void main(String[] args) throws Throwable {
-//		
-//		List<String> headerList = Lists.newArrayList();
-//		for (int i = 1; i <= 10; i++) {
-//			headerList.add("表头"+i);
-//		}
-//		
-//		List<String> dataRowList = Lists.newArrayList();
-//		for (int i = 1; i <= headerList.size(); i++) {
-//			dataRowList.add("数据"+i);
-//		}
-//		
-//		List<List<String>> dataList = Lists.newArrayList();
-//		for (int i = 1; i <=1000000; i++) {
-//			dataList.add(dataRowList);
-//		}
-//
-//		ExportExcel ee = new ExportExcel("表格标题", headerList);
-//		
-//		for (int i = 0; i < dataList.size(); i++) {
-//			Row row = ee.addRow();
-//			for (int j = 0; j < dataList.get(i).size(); j++) {
-//				ee.addCell(row, j, dataList.get(i).get(j));
-//			}
-//		}
-//		
-//		ee.writeFile("target/export.xlsx");
-//
-//		ee.dispose();
-//		
-//		log.debug("Export success.");
-//		
-//	}
 
 }

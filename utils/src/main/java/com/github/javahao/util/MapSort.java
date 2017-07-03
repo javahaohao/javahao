@@ -3,13 +3,13 @@ package com.github.javahao.util;
 import java.util.*;
 
 public class MapSort {
-	/** 
-     * 使用 Map按key进行排序 
-	 * @param <K>
-	 * @param <V>
-     * @param map 
-     * @return 
-     */  
+    /**
+     * * 使用 Map按key进行排序
+     * @param map 参数
+     * @param <K> 键
+     * @param <V> 值
+     * @return 返回排序结果
+     */
     public static <K, V> Map<K, V> sortMapByKey(Map<K, V> map) {
         if (map == null || map.isEmpty()) {  
             return null;  
@@ -24,8 +24,10 @@ public class MapSort {
     }
     /** 
      * 使用 Map按value进行排序 
-     * @param map 
-     * @return 
+     * @param map 参数
+     * @param <K> 键
+     * @param <V> 值
+     * @return 结果
      */  
     public static <K, V> Map<K, V> sortMapByValue(Map<K, V> map) {  
         if (map == null || map.isEmpty()) {  

@@ -6,7 +6,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ import java.util.List;
  * Created by javahao on 2017/6/19.
  * auth：JavaHao
  */
-public abstract class BaseService<T extends BaseBean,M extends BaseMapper> {
+public abstract class BaseService<T extends BaseBean,M extends BaseMapper> implements com.github.javahao.base.Service<T> {
     protected final transient Log log = LogFactory.getLog(this.getClass());
 
     @Autowired
@@ -22,8 +21,8 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> {
 
     /**
      * 按照条件查询数据
-     * @param t
-     * @return
+     * @param t 查询条件
+     * @return 返回查询结果
      */
     public List<T> list(T t) throws CRUDException {
         try {
@@ -36,13 +35,13 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> {
 
     /**
      * 按照分页查询数据
-     * @param t
-     * @return
+     * @param t 查询条件
+     * @return 返回分页结果
      * @throws CRUDException
      */
-    public Page<T> page(T t, HttpServletRequest request) throws CRUDException {
+    public Page<T> page(T t) throws CRUDException {
         try{
-            Page.setPageFromRequest(request);
+            Page.setPageFromRequest();
             return new Page<T>(m.list(t));
         }catch(Exception e){
             log.error(e);
@@ -51,8 +50,8 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> {
     }
     /**
      * 查询一个符合条件的对象
-     * @param t
-     * @return
+     * @param t 查询条件
+     * @return 返回查询结果
      * @throws CRUDException
      */
     public T one(T t) throws CRUDException{
@@ -73,11 +72,12 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> {
 
     /**
      * 保存数据
-     * @param t
-     * @return
+     * @param t 保存对象
+     * @return  影响条数
      */
     public int save(T t) throws CRUDException {
         try {
+            t.preSave();
             return m.save(t);
         } catch (Exception e) {
             log.error(e);
@@ -92,6 +92,7 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> {
      */
     public int update(T t) throws CRUDException {
         try {
+            t.preUpdate();
             return m.save(t);
         } catch (Exception e) {
             log.error(e);

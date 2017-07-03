@@ -15,8 +15,8 @@ import java.util.List;
 public class ArraysUtil {
     /**
      * 将object数组转化为string数组
-     * @param objects
-     * @return
+     * @param objects 转换对象
+     * @return 返回转换值
      */
     public static String[] objectToString(Object[] objects){
         if(objects.length<=0)return new String[1];
@@ -29,8 +29,8 @@ public class ArraysUtil {
     /**
      * 将string类型数组转换为long类型数组
      *
-     * @param array
-     * @return
+     * @param array 转换对象
+     * @return 返回转换后的值
      */
     public static Long[] arrayToLongArray(String... array) {
         Long[] l = new Long[array.length];
@@ -47,8 +47,8 @@ public class ArraysUtil {
     /**
      * 转化成长整型集合
      *
-     * @param array
-     * @return
+     * @param array 转换对象
+     * @return 获取转换后的值
      */
     public static List<Long> arrayToLongList(String... array) {
         if (null == array || array.length <= 0)
@@ -59,9 +59,9 @@ public class ArraysUtil {
     /**
      * 将long集合类型用指定join串联起来
      *
-     * @param items
-     * @param join
-     * @return
+     * @param items 连接集合
+     * @param join 连接分割
+     * @return 返回连接结果
      */
     public static String joinLongArray(List<Long> items, String join) {
         if (CollectionUtils.isEmpty(items))
@@ -77,9 +77,9 @@ public class ArraysUtil {
     /**
      * 将long集合类型用指定join串联起来
      *
-     * @param items
-     * @param join
-     * @return
+     * @param items 连接集合
+     * @param join 连接分割
+     * @return 返回连接结果
      */
     public static String joinStringArray(List<String> items, String join) {
         if (CollectionUtils.isEmpty(items))
@@ -96,9 +96,9 @@ public class ArraysUtil {
     /**
      * 将long数组类型用指定join串联起来
      *
-     * @param items
-     * @param join
-     * @return
+     * @param items 连接数组
+     * @param join 连接分割
+     * @return 返回连接结果
      */
     public static String joinLongArray(Long[] items, String join) {
         return joinLongArray(Arrays.asList(items), join);

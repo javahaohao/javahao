@@ -49,9 +49,10 @@ public class ImportExcel {
 	
 	/**
 	 * 构造函数
+	 * @param fileName 文件名称
 	 * @param headerNum 标题行号，数据行号=标题行号+1
-	 * @throws InvalidFormatException 
-	 * @throws IOException 
+	 * @throws InvalidFormatException 异常
+	 * @throws IOException 异常
 	 */
 	public ImportExcel(String fileName, int headerNum) 
 			throws InvalidFormatException, IOException {
@@ -60,9 +61,10 @@ public class ImportExcel {
 	
 	/**
 	 * 构造函数
+	 * @param file 文件
 	 * @param headerNum 标题行号，数据行号=标题行号+1
-	 * @throws InvalidFormatException 
-	 * @throws IOException 
+	 * @throws InvalidFormatException 异常
+	 * @throws IOException 异常
 	 */
 	public ImportExcel(File file, int headerNum) 
 			throws InvalidFormatException, IOException {
@@ -71,10 +73,11 @@ public class ImportExcel {
 
 	/**
 	 * 构造函数
+	 * @param fileName 文件名
 	 * @param headerNum 标题行号，数据行号=标题行号+1
 	 * @param sheetIndex 工作表编号
-	 * @throws InvalidFormatException 
-	 * @throws IOException 
+	 * @throws InvalidFormatException 异常
+	 * @throws IOException 异常
 	 */
 	public ImportExcel(String fileName, int headerNum, int sheetIndex) 
 			throws InvalidFormatException, IOException {
@@ -83,10 +86,11 @@ public class ImportExcel {
 	
 	/**
 	 * 构造函数
+	 * @param file 文件
 	 * @param headerNum 标题行号，数据行号=标题行号+1
 	 * @param sheetIndex 工作表编号
-	 * @throws InvalidFormatException 
-	 * @throws IOException 
+	 * @throws InvalidFormatException 异常
+	 * @throws IOException 异常
 	 */
 	public ImportExcel(File file, int headerNum, int sheetIndex) 
 			throws InvalidFormatException, IOException {
@@ -95,10 +99,11 @@ public class ImportExcel {
 	
 	/**
 	 * 构造函数
+	 * @param multipartFile 上传对象
 	 * @param headerNum 标题行号，数据行号=标题行号+1
 	 * @param sheetIndex 工作表编号
-	 * @throws InvalidFormatException 
-	 * @throws IOException 
+	 * @throws InvalidFormatException 异常
+	 * @throws IOException 异常
 	 */
 	public ImportExcel(MultipartFile multipartFile, int headerNum, int sheetIndex)
 			throws InvalidFormatException, IOException {
@@ -107,10 +112,12 @@ public class ImportExcel {
 
 	/**
 	 * 构造函数
+	 * @param fileName 文件名称
+	 * @param is 流
 	 * @param headerNum 标题行号，数据行号=标题行号+1
 	 * @param sheetIndex 工作表编号
-	 * @throws InvalidFormatException 
-	 * @throws IOException 
+	 * @throws InvalidFormatException 异常
+	 * @throws IOException 异常
 	 */
 	public ImportExcel(String fileName, InputStream is, int headerNum, int sheetIndex) 
 			throws InvalidFormatException, IOException {
@@ -133,8 +140,8 @@ public class ImportExcel {
 	
 	/**
 	 * 获取行对象
-	 * @param rownum
-	 * @return
+	 * @param rownum 行
+	 * @return 获取行
 	 */
 	public Row getRow(int rownum){
 		return this.sheet.getRow(rownum);
@@ -142,7 +149,7 @@ public class ImportExcel {
 
 	/**
 	 * 获取数据行号
-	 * @return
+	 * @return 结果
 	 */
 	public int getDataRowNum(){
 		return headerNum+1;
@@ -150,7 +157,7 @@ public class ImportExcel {
 	
 	/**
 	 * 获取最后一个数据行号
-	 * @return
+	 * @return 结果
 	 */
 	public int getLastDataRowNum(){
 		return this.sheet.getLastRowNum()+headerNum;
@@ -158,7 +165,7 @@ public class ImportExcel {
 	
 	/**
 	 * 获取最后一个列号
-	 * @return
+	 * @return 结果
 	 */
 	public int getLastCellNum(){
 		return this.getRow(headerNum).getLastCellNum();
@@ -192,13 +199,17 @@ public class ImportExcel {
 		}
 		return val;
 	}
-	
+
 	/**
-	 * 获取导入数据列表
+	 * * 获取导入数据列表
 	 * @param cls 导入对象类型
 	 * @param groups 导入分组
+	 * @throws Exception  异常
+	 * @param <E> 泛型
+	 * @return 结果
+	 * @throws Exception 异常
 	 */
-	public <E> List<E> getDataList(Class<E> cls, int... groups) throws InstantiationException, IllegalAccessException{
+	public <E> List<E> getDataList(Class<E> cls, int... groups) throws Exception{
 		List<Object[]> annotationList = Lists.newArrayList();
 		// Get annotation field 
 		Field[] fs = cls.getDeclaredFields();

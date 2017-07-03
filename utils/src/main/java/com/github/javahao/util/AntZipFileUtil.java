@@ -47,11 +47,11 @@ public class AntZipFileUtil {
 		return flag;
 	}
 	/**
-	 * @param zipDir
-	 * @param targetStr
-	 * @param targetName
-	 * @param suffix
-	 * @return
+	 * @param zipDir 压缩的文件夹
+	 * @param targetStr 压缩到的文件夹
+	 * @param targetName 压缩成的名字
+	 * @param suffix 后缀名
+	 * @return 获取压缩成功标识
 	 */
 	public static boolean doFileZip(File zipDir, String targetStr, String targetName,String suffix) {
 		// 未指定压缩文件名，默认为"ZipFile"
@@ -211,16 +211,6 @@ public class AntZipFileUtil {
 	 */
 	public static void setBufSize(int bufSize) {
 		AntZipFileUtil.bufSize = bufSize;
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		AntZipFileUtil test = new AntZipFileUtil();
-
-		test.doZip("D:/expImage/", "d:/", "aa.zip");
-
 	}
 
 }

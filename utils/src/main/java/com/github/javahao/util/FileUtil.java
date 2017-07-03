@@ -14,9 +14,39 @@ import java.util.*;
 
 public class FileUtil {
     private static final transient Log log = LogFactory.getLog(FileUtil.class);
+
+	/**
+
+	 * 判断是否为文件，如果path为null，则返回false
+
+	 *
+
+	 * @param path 文件路径
+
+	 * @return 如果为文件true
+
+	 */
+	public static boolean isFile(String path) {
+		return (path == null) ? false : new File(path).isDirectory();
+	}
+
+	/**
+
+	 * 判断是否为文件，如果file为null，则返回false
+
+	 *
+
+	 * @param file 文件
+
+	 * @return 如果为文件true
+
+	 */
+	public static boolean isFile(File file) {
+		return (file == null) ? false : file.isDirectory();
+	}
 	/**
 	 * 如果指定路径不存在，则创建
-	 * @param path
+	 * @param path 路径
 	 */
 	public static void fileIsExists(String path){
 		File file = new File(path);
@@ -27,8 +57,8 @@ public class FileUtil {
 	private static List<File> fileList = new ArrayList<File>();
 	/**
 	 * 读取txt文件，返回读取之后的内容
-	 * @param path
-	 * @return
+	 * @param path 路径
+	 * @return 读取结果
 	 */
 	public static List<String> readTxt(String path){
 		List<String> result = new ArrayList<String>();
@@ -52,10 +82,9 @@ public class FileUtil {
 	}
 	/**
 	 * 将内容输出到文件
-	 * @param path
-	 * @param value
-	 * @throws FileNotFoundException 
-	 * @throws UnsupportedEncodingException 
+	 * @param path 路径
+	 * @param value 输出值
+	 * @throws Exception 输出异常
 	 */
 	public static void printTxtToFile(String path,String value) throws Exception{
 		File file = new File(path);
@@ -69,9 +98,9 @@ public class FileUtil {
 
 	/**
 	 * 遍历指定文件夹下的文件名并用关键字连接起来
-	 * @param path
-	 * @param join
-	 * @return
+	 * @param path 路径
+	 * @param join 连接分割
+	 * @return 返回结果
 	 */
 	public static String joinFilName(String path,String join){
 		StringBuffer sb = new StringBuffer();
@@ -87,7 +116,7 @@ public class FileUtil {
 	}
 	/**
      * 获取工程路径
-     * @return
+     * @return 获取项目路径
      */
     public static String getProjectPath(){
 		String projectPath = "";
@@ -115,7 +144,7 @@ public class FileUtil {
 
 	/**
 	 * 获取项目的编译路径
-	 * @return
+	 * @return 获取项目路径
 	 */
 	public static String getProjectClassPath(){
 		try {
@@ -128,8 +157,8 @@ public class FileUtil {
 	
 	/**
 	 * 删除指定路径下面所有文件
-	 * @param path
-	 * @throws Exception
+	 * @param path 路径
+	 * @throws Exception 删除异常
 	 */
 	public static void deleteFileByFolder(String path) throws Exception{
 		File file = new File(path);
@@ -140,8 +169,8 @@ public class FileUtil {
 	}
 	/**
 	 * 删除指定文件
-	 * @param path
-	 * @throws Exception
+	 * @param path 路径
+	 * @throws Exception 删除异常
 	 */
 	public static void deleteFileByPath(String path) throws Exception{
 		File file = new File(path);
@@ -149,8 +178,8 @@ public class FileUtil {
 	}
 	/**
 	 * 删除文件辅助方法
-	 * @param file
-	 * @throws Exception
+	 * @param file 要删除的文件
+	 * @throws Exception 删除异常
 	 */
 	private static void deleteFileUtil(File file)throws Exception{
 		File[] childFile = file.listFiles();
@@ -165,9 +194,10 @@ public class FileUtil {
 	static BufferedOutputStream bos = null;
 	/**
 	 * 复制指定路径的路径文件到指定路径
-	 * @param sourcePath
-	 * @param toPath
-	 * @return
+	 * @param sourcePath 原路径
+	 * @param toPath 目标路径
+	 * @param fileName 文件名称
+	 * @return 结果
 	 */
 	public static boolean copyFileToPath(String sourcePath,String toPath,String fileName){
 		File inputFile  =  new File(sourcePath);
@@ -217,7 +247,7 @@ public class FileUtil {
 	 * @param readType 读取方式：NETWORK是通过http://..方式读取，LOCAL是通过本地读取
 	 * @param readKey 要获得指定key对应的值
 	 * @param defaultValue 如果key对应的值不存在获取的默认值
-	 * @return
+	 * @return 结果
 	 */
 	public static String readProperties(String path,String readType,String readKey,String defaultValue){
 		Properties properties = readPropertiesUtil(path, readType);
@@ -225,10 +255,10 @@ public class FileUtil {
 		return result;
 	}
 	/**
-	 * 获取properties中的key-->value的对应值都取出来
-	 * @param path
-	 * @param readType
-	 * @return
+	 * 获取properties中的key,value的对应值都取出来
+	 * @param path 路径
+	 * @param readType 读取类型
+	 * @return 结果
 	 */
 	public static Map<String, String> getPropertiesKeyValue(String path,String readType){
 		Properties properties = readPropertiesUtil(path, readType);
@@ -244,9 +274,9 @@ public class FileUtil {
 	}
 	/**
 	 * 读取properties辅助类
-	 * @param path
-	 * @param readType
-	 * @return
+	 * @param path 路径
+	 * @param readType  读取类型
+	 * @return 结果
 	 */
 	public static Properties readPropertiesUtil(String path,String readType){
 		Properties properties = new Properties();
@@ -269,8 +299,8 @@ public class FileUtil {
 	}
 	/**
 	 * 计算文件的MD5值
-	 * @param file
-	 * @return
+	 * @param file 检验文件
+	 * @return 结果
 	 */
 	public static String getFileMD5(File file) {
 	    if (!file.isFile()) {
@@ -301,8 +331,8 @@ public class FileUtil {
 	}
 	/**
 	 *  计算文件的 SHA-1 值 
-	 * @param file
-	 * @return
+	 * @param file 校验文件
+	 * @return 结果
 	 */
 	public static String getFileSha1(File file) { 
 	    if (!file.isFile()) { 
@@ -334,7 +364,7 @@ public class FileUtil {
 	/**
      * MD5签名
      * @param content   要签名的内容
-     * @return
+     * @return 结果
      */
 	public static String md5(String content){
         StringBuffer sb = new StringBuffer();

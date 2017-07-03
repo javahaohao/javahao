@@ -1,5 +1,6 @@
 package com.github.javahao.base;
 
+import com.github.javahao.util.Container;
 import com.github.javahao.util.PropertiesUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -31,7 +32,8 @@ public class Page<T> extends PageInfo<T> {
 		super(list);
 	}
 
-	public static void setPageFromRequest(HttpServletRequest request) {
+	public static void setPageFromRequest() {
+		HttpServletRequest request = Container.getRequest();
 		if(request!=null){
 			String pageSizeStr = request.getParameter("pageSize");
 			pageSizeStr = StringUtils.isEmpty(pageSizeStr)?"-1":pageSizeStr;

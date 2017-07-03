@@ -10,8 +10,8 @@ public class PropertiesUtil {
 	
 	/**
 	 * 从reources.xml中获取值
-	 * @param key
-	 * @return
+	 * @param key k值
+	 * @return 结果
 	 */
 	public static String getProperty(String key){
 		return properties.getProperty(key);

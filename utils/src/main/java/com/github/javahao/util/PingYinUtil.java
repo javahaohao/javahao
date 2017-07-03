@@ -18,8 +18,8 @@ public class PingYinUtil {
 	/**
 	 * 将字符串中的中文转化为拼音,其他字符不变
 	 * 
-	 * @param inputString
-	 * @return
+	 * @param inputString 翻译的内容
+	 * @return 结果
 	 */
 	public static String getPingYin(String inputString) {
 		HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
@@ -72,8 +72,8 @@ public class PingYinUtil {
    }   
    /**
     * 获取字符串的第一个字母
-    * @param chinese
-    * @return
+    * @param chinese 汉字
+    * @return 结果
     */
    public static String getFistOneSpell(String chinese){
 	   String szm = getFirstSpell(chinese);
