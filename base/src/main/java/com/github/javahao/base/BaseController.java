@@ -3,6 +3,8 @@ package com.github.javahao.base;
 import com.github.javahao.annotation.Permission;
 import com.github.javahao.annotation.Relation;
 import com.github.javahao.exception.CRUDException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import java.util.Arrays;
  * auth：JavaHao
  */
 public abstract class BaseController<T extends BaseBean,S extends Service> {
+    protected final transient Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
     protected S s;
 
