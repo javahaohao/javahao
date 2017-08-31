@@ -93,7 +93,7 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
     public int update(T t) throws CRUDException {
         try {
             t.preUpdate();
-            return m.save(t);
+            return m.update(t);
         } catch (Exception e) {
             log.error(e);
             throw new CRUDException(e);
@@ -107,7 +107,7 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
      */
     public int delete(T t) throws CRUDException {
         try {
-            return m.save(t);
+            return m.delete(t);
         } catch (Exception e) {
             log.error(e);
             throw new CRUDException(e);
@@ -121,7 +121,7 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
      */
     public int count(T t) throws CRUDException {
         try {
-            return m.save(t);
+            return m.count(t);
         } catch (Exception e) {
             log.error(e);
             throw new CRUDException(e);

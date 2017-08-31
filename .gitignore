@@ -2,3 +2,6 @@
 /*.iml
 /javahao-util/target
 target
+*.iml
+/base/*.iml
+/utils/*.iml

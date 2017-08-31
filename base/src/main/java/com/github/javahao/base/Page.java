@@ -1,7 +1,7 @@
 package com.github.javahao.base;
 
-import com.github.javahao.util.Container;
 import com.github.javahao.util.PropertiesUtil;
+import com.github.javahao.util.UserSpace;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
@@ -33,7 +33,7 @@ public class Page<T> extends PageInfo<T> {
 	}
 
 	public static void setPageFromRequest() {
-		HttpServletRequest request = Container.getRequest();
+		HttpServletRequest request = UserSpace.getRequest();
 		if(request!=null){
 			String pageSizeStr = request.getParameter("pageSize");
 			pageSizeStr = StringUtils.isEmpty(pageSizeStr)?"-1":pageSizeStr;

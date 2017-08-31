@@ -3,6 +3,7 @@ package com.github.javahao.base;
 import com.github.javahao.annotation.Permission;
 import com.github.javahao.annotation.Relation;
 import com.github.javahao.exception.CRUDException;
+import com.github.javahao.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,25 +27,34 @@ import java.util.Arrays;
  */
 public abstract class BaseController<T extends BaseBean,S extends Service> {
     protected final transient Logger log = LoggerFactory.getLogger(this.getClass());
-    @Autowired
-    protected S s;
+
+    /**
+     * 获取service实例
+     * @return 结果
+     */
+    protected abstract S getService();
 
     protected final String MSG = "msg";
     /**
-     * 功能模块（jsp包名）即模块名称
-     * @return
+     * view层包路径
+     * @return 结果
+     */
+    protected abstract String pkg();
+    /**
+     * 功能模块
+     * @return 结果
      */
     protected abstract String model();
 
     /**
      * 功能模块描述（功能操作提示信息）
-     * @return
+     * @return 结果
      */
     protected abstract String modelMsg();
 
     /**
      * 跳转修改或者新增页面加载的公共数据，如果需要额外加入关联表数据可重写此方法
-     * @param model
+     * @param model model
      */
     protected void updateCommon(Model model,T t) throws CRUDException {
 
@@ -52,28 +62,28 @@ public abstract class BaseController<T extends BaseBean,S extends Service> {
 
     /**
      * 跳转list页面加载的公共数据
-     * @param model
+     * @param model model
      */
     protected void listCommon(Model model,T t)throws CRUDException {}
 
     /**
      * 查询所有数据控制方法
-     * @param model
+     * @param model model
      * @param t
      * @return
      * @throws CRUDException
      */
     @Permission(value = "view")
-    @RequestMapping("/list")
+    @RequestMapping(value = {"/list",""})
     public String list(Model model,T t) throws CRUDException {
-        model.addAttribute("list",s.list(t));
+        model.addAttribute("list",getService().list(t));
         listCommon(model,t);
-        return model()+"/list";
+        return pkg()+"/list";
     }
 
     /**
      * 按照分页查询数据
-     * @param model
+     * @param model model
      * @param t
      * @return
      * @throws CRUDException
@@ -81,9 +91,9 @@ public abstract class BaseController<T extends BaseBean,S extends Service> {
     @Permission(value = "view")
     @RequestMapping("/page")
     public String page(Model model, T t) throws CRUDException {
-        model.addAttribute("list",s.page(t));
+        model.addAttribute("list",getService().page(t));
         listCommon(model,t);
-        return model()+"/list";
+        return pkg()+"/list";
     }
 
     /**
@@ -96,23 +106,23 @@ public abstract class BaseController<T extends BaseBean,S extends Service> {
     @RequestMapping("/page/json")
     @ResponseBody
     public Page page(T t) throws CRUDException {
-        return s.page(t);
+        return getService().page(t);
     }
 
     /**
      * 修改/新增跳转页面初始方法
-     * @param model
+     * @param model model
      * @param t
      * @return
      * @throws CRUDException
      */
-    @Permission(value = "update")
+    @Permission(value = {"update","create","add","insert"},relation = Relation.OR)
     @RequestMapping(value = "/edit",method = RequestMethod.GET)
     public String edit(Model model,T t) throws CRUDException {
         if(null!=t.getId())
-            model.addAttribute(model(),s.one(t));
+            model.addAttribute(model(),getService().one(t));
         updateCommon(model,t);
-        return model()+"/edit";
+        return pkg()+"/edit";
     }
     /**
      * 保存/修改数据
@@ -123,11 +133,11 @@ public abstract class BaseController<T extends BaseBean,S extends Service> {
     @Permission(value = {"update","create","add","insert"},relation = Relation.OR)
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     protected String edit(T t, RedirectAttributes redirectAttributes)throws CRUDException{
-        if(null!=t.getId()) {
-            s.update(t);
+        if(!StringUtils.isBlank(t.getId())) {
+            getService().update(t);
             redirectAttributes.addFlashAttribute(MSG, modelMsg()+"修改成功！");
         }else {
-            s.save(t);
+            getService().save(t);
             redirectAttributes.addFlashAttribute(MSG, modelMsg()+"保存成功！");
         }
         return "redirect:/"+model()+"/list";
@@ -135,7 +145,7 @@ public abstract class BaseController<T extends BaseBean,S extends Service> {
 
     /**
      * 删除数据
-     * @param model
+     * @param model model
      * @param t
      * @param redirectAttributes
      * @return
@@ -145,7 +155,7 @@ public abstract class BaseController<T extends BaseBean,S extends Service> {
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
     protected String delete(Model model,T t,RedirectAttributes redirectAttributes) throws CRUDException {
         t.setIdList(Arrays.asList(t.getId().split(",")));
-        s.delete(t);
+        getService().delete(t);
         redirectAttributes.addFlashAttribute(MSG, modelMsg()+"删除成功！");
         return "redirect:/"+model()+"/list";
     }
