@@ -11,7 +11,7 @@
 
     <artifactId>base</artifactId>
     <packaging>jar</packaging>
-    <version>1.4-RELEASE</version>
+    <version>1.6-RELEASE</version>
 
     <name>base</name>
     <url>https://github.com/javahaohao/javahao/tree/master/base</url>
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.github.javahaohao</groupId>
             <artifactId>utils</artifactId>
-            <version>1.4-RELEASE</version>
+            <version>1.6-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>com.github.pagehelper</groupId>

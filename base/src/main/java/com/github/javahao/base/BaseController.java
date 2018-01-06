@@ -47,6 +47,14 @@ public abstract class BaseController<T extends BaseBean,S extends Service> {
     protected abstract String model();
 
     /**
+     * url默认model的处理方式，转为小写
+     * @return model的处理结果
+     */
+    protected String modelProcess(){
+        return model().toLowerCase();
+    }
+
+    /**
      * 功能模块描述（功能操作提示信息）
      * @return 结果
      */
@@ -91,7 +99,7 @@ public abstract class BaseController<T extends BaseBean,S extends Service> {
     @Permission(value = "view")
     @RequestMapping("/page")
     public String page(Model model, T t) throws CRUDException {
-        model.addAttribute("list",getService().page(t));
+        model.addAttribute("page",getService().page(t));
         listCommon(model,t);
         return pkg()+"/list";
     }
@@ -106,6 +114,7 @@ public abstract class BaseController<T extends BaseBean,S extends Service> {
     @RequestMapping("/page/json")
     @ResponseBody
     public Page page(T t) throws CRUDException {
+        listCommon(null,t);
         return getService().page(t);
     }
 
@@ -140,7 +149,7 @@ public abstract class BaseController<T extends BaseBean,S extends Service> {
             getService().save(t);
             redirectAttributes.addFlashAttribute(MSG, modelMsg()+"保存成功！");
         }
-        return "redirect:/"+model()+"/list";
+        return "redirect:/"+modelProcess()+"/page";
     }
 
     /**
@@ -157,6 +166,6 @@ public abstract class BaseController<T extends BaseBean,S extends Service> {
         t.setIdList(Arrays.asList(t.getId().split(",")));
         getService().delete(t);
         redirectAttributes.addFlashAttribute(MSG, modelMsg()+"删除成功！");
-        return "redirect:/"+model()+"/list";
+        return "redirect:/"+modelProcess()+"/page";
     }
 }

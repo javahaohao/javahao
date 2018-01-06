@@ -3,6 +3,7 @@ package com.github.javahao.base;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.javahao.util.IDUtil;
+import com.github.javahao.util.StringUtils;
 import com.github.javahao.util.UserSpace;
 
 import java.io.Serializable;
@@ -34,7 +35,8 @@ public abstract class BaseBean<T> implements Serializable {
     )
     protected Date modifiedAt;
     public void preSave(){
-        this.id= IDUtil.createUUID();
+        if(StringUtils.isBlank(this.id))
+            this.id= IDUtil.createUUID();
         this.creatorId= UserSpace.getId();
         this.createdAt=new Date();
     }
