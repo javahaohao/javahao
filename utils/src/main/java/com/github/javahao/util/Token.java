@@ -10,7 +10,7 @@ public interface Token {
      * 获取当前操作用户的主键
      * @return 主键值
      */
-    String getId();
+    Long getId();
 
     /**
      * 是否登录判断

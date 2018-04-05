@@ -82,7 +82,7 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
      * @throws CRUDException
      */
     @Override
-    public T one(String id) throws CRUDException {
+    public T one(Long id) throws CRUDException {
         T t = null;
         try {
             t = (T) getEntityTypeClz().newInstance();

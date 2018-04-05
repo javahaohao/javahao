@@ -78,7 +78,7 @@ public class UserSpace {
      * 获取操作人的ID
      * @return id值
      */
-    public static String getId(){
+    public static Long getId(){
         Token t = token.get();
         if(t!=null)
             return t.getId();

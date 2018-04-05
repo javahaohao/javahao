@@ -18,7 +18,7 @@ public interface Service<T extends BaseBean> {
      * @return 返回查询结果
      * @throws CRUDException
      */
-    T one(String id) throws CRUDException;
+    T one(Long id) throws CRUDException;
 
     /**
      * 查询一个符合条件的对象

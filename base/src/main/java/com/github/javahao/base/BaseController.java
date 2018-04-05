@@ -142,7 +142,7 @@ public abstract class BaseController<T extends BaseBean,S extends Service> {
     @Permission(value = {"update","create","add","insert"},relation = Relation.OR)
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     protected String edit(T t, RedirectAttributes redirectAttributes)throws CRUDException{
-        if(!StringUtils.isBlank(t.getId())) {
+        if(null!=t.getId()) {
             getService().update(t);
             redirectAttributes.addFlashAttribute(MSG, modelMsg()+"修改成功！");
         }else {
@@ -163,7 +163,7 @@ public abstract class BaseController<T extends BaseBean,S extends Service> {
     @Permission(value = "delete")
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
     protected String delete(Model model,T t,RedirectAttributes redirectAttributes) throws CRUDException {
-        t.setIdList(Arrays.asList(t.getId().split(",")));
+        t.setIdList(Arrays.asList(t.getIdStr().split(",")));
         getService().delete(t);
         redirectAttributes.addFlashAttribute(MSG, modelMsg()+"删除成功！");
         return "redirect:/"+modelProcess()+"/page";

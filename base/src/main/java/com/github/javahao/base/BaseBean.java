@@ -1,9 +1,9 @@
 package com.github.javahao.base;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.javahao.util.IDUtil;
-import com.github.javahao.util.StringUtils;
 import com.github.javahao.util.UserSpace;
 
 import java.io.Serializable;
@@ -16,10 +16,14 @@ import java.util.List;
  * auth：JavaHao
  */
 public abstract class BaseBean<T> implements Serializable {
-    protected String id;
-    protected List<String> idList;
-    protected String creatorId;
-    protected String modifierId;
+    @JSONField(serializeUsing= ToStringSerializer.class)
+    protected Long id;
+    protected String idStr;
+    protected List<Long> idList;
+    @JSONField(serializeUsing= ToStringSerializer.class)
+    protected Long creatorId;
+    @JSONField(serializeUsing= ToStringSerializer.class)
+    protected Long modifierId;
     @JSONField(
         format = "yyyy-MM-dd HH:mm:ss"
     )
@@ -35,8 +39,8 @@ public abstract class BaseBean<T> implements Serializable {
     )
     protected Date modifiedAt;
     public void preSave(){
-        if(StringUtils.isBlank(this.id))
-            this.id= IDUtil.createUUID();
+        if(null==this.id)
+            this.id = IDUtil.snkwflakeId();
         this.creatorId= UserSpace.getId();
         this.createdAt=new Date();
     }
@@ -45,35 +49,35 @@ public abstract class BaseBean<T> implements Serializable {
         this.modifiedAt=new Date();
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public List<String> getIdList() {
+    public List<Long> getIdList() {
         return idList;
     }
 
-    public void setIdList(List<String> idList) {
+    public void setIdList(List<Long> idList) {
         this.idList = idList;
     }
 
-    public String getCreatorId() {
+    public Long getCreatorId() {
         return creatorId;
     }
 
-    public void setCreatorId(String creatorId) {
+    public void setCreatorId(Long creatorId) {
         this.creatorId = creatorId;
     }
 
-    public String getModifierId() {
+    public Long getModifierId() {
         return modifierId;
     }
 
-    public void setModifierId(String modifierId) {
+    public void setModifierId(Long modifierId) {
         this.modifierId = modifierId;
     }
 
@@ -91,5 +95,13 @@ public abstract class BaseBean<T> implements Serializable {
 
     public void setModifiedAt(Date modifiedAt) {
         this.modifiedAt = modifiedAt;
+    }
+
+    public String getIdStr() {
+        return idStr;
+    }
+
+    public void setIdStr(String idStr) {
+        this.idStr = idStr;
     }
 }
