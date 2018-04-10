@@ -11,7 +11,7 @@
 
     <artifactId>utils</artifactId>
     <packaging>jar</packaging>
-    <version>1.9-RELEASE</version>
+    <version>${javahao.version}</version>
 
     <name>utils</name>
     <url>https://github.com/javahaohao/javahao/tree/master/utils</url>
