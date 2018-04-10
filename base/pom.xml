@@ -5,13 +5,13 @@
     <parent>
         <artifactId>javahao</artifactId>
         <groupId>com.github.javahaohao</groupId>
-        <version>1.1-RELEASE</version>
+        <version>1.2-RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>base</artifactId>
     <packaging>jar</packaging>
-    <version>${javahao.version}</version>
+    <version>${plugins.javahao.version}</version>
 
     <name>base</name>
     <url>https://github.com/javahaohao/javahao/tree/master/base</url>
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.github.javahaohao</groupId>
             <artifactId>utils</artifactId>
-            <version>${javahao.version}</version>
+            <version>${plugins.javahao.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.pagehelper</groupId>
