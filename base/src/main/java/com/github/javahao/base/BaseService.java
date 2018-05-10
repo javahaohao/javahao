@@ -1,11 +1,11 @@
 package com.github.javahao.base;
 
 import com.github.javahao.exception.CRUDException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -20,7 +20,7 @@ import java.util.List;
  * auth：JavaHao
  */
 public abstract class BaseService<T extends BaseBean,M extends BaseMapper> implements com.github.javahao.base.Service<T> {
-    protected final transient Log log = LogFactory.getLog(this.getClass());
+    protected final Logger LOG = LoggerFactory.getLogger(this.getClass());
     /**
      * 默认flushstatements大小
      */
@@ -53,7 +53,7 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
                 return Collections.emptyList();
             return list;
         } catch (Exception e) {
-            log.error(e);
+            LOG.error("按照条件查询数据失败",e);
             throw new CRUDException(e);
         }
     }
@@ -69,7 +69,7 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
             Page.setPageFromRequest();
             return new Page<T>(m.list(t));
         }catch(Exception e){
-            log.error(e);
+            LOG.error("按照分页查询数据失败",e);
             throw new CRUDException(e);
         }
     }
@@ -111,7 +111,7 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
                 }else
                     return results.get(0);
         } catch (Exception e) {
-            log.error(e);
+            LOG.error("查询一个符合条件的对象失败",e);
             throw new CRUDException(e);
         }
         return null;
@@ -128,7 +128,7 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
             t.preSave();
             return m.save(t);
         } catch (Exception e) {
-            log.error(e);
+            LOG.error("保存数据失败",e);
             throw new CRUDException(e);
         }
     }
@@ -144,7 +144,7 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
             t.preUpdate();
             return m.update(t);
         } catch (Exception e) {
-            log.error(e);
+            LOG.error("修改数据失败",e);
             throw new CRUDException(e);
         }
     }
@@ -159,7 +159,7 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
         try {
             return m.delete(t);
         } catch (Exception e) {
-            log.error(e);
+            LOG.error("删除数据失败",e);
             throw new CRUDException(e);
         }
     }
@@ -174,7 +174,7 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
         try {
             return m.count(t);
         } catch (Exception e) {
-            log.error(e);
+            LOG.error("统计数据量失败",e);
             throw new CRUDException(e);
         }
     }
@@ -239,14 +239,14 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
                 i+=batchSession.update(excuMethod,t);
                 if ((i + 1) % BATCH_LIMIT == 0){
                     batchSession.flushStatements();
-                    log.debug(String.format("%s batch %s data sizes",excuMethod,i));
+                    LOG.debug(String.format("%s batch %s data sizes",excuMethod,i));
                 }
             }
             batchSession.flushStatements();
             batchSession.commit();
             batchSession.clearCache();
         } catch (Exception e) {
-            log.error(e);
+            LOG.error("批量修改操作失败",e);
             batchSession.rollback();
             throw new CRUDException(e);
         }finally {
@@ -271,14 +271,14 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
                 i+=batchSession.insert(excuMethod,t);
                 if ((i + 1) % BATCH_LIMIT == 0){
                     batchSession.flushStatements();
-                    log.debug(String.format("%s batch %s data sizes",excuMethod,i));
+                    LOG.debug(String.format("%s batch %s data sizes",excuMethod,i));
                 }
             }
             batchSession.flushStatements();
             batchSession.commit();
             batchSession.clearCache();
         } catch (Exception e) {
-            log.error(e);
+            LOG.error("批量保存操作失败",e);
             batchSession.rollback();
             throw new CRUDException(e);
         }finally {

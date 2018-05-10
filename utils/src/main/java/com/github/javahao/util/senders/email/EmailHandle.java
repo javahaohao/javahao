@@ -1,6 +1,7 @@
 package com.github.javahao.util.senders.email;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -26,7 +27,7 @@ import javax.mail.internet.MimeUtility;
  */
 public class EmailHandle {
 
-    private static final Logger LOGGER = Logger.getLogger(EmailHandle.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailHandle.class);
 
     /** 邮件对象 **/
     private MimeMessage mimeMsg;

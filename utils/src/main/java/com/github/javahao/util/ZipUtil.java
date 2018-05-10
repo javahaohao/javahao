@@ -2,11 +2,11 @@ package com.github.javahao.util;
 
 import cn.org.rapid_framework.util.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipFile;
 import org.apache.tools.zip.ZipOutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.*;
@@ -19,7 +19,7 @@ import java.util.*;
 public class ZipUtil {
 
 	private static int bufSize = 8096;
-	private static Log log = LogFactory.getLog(ZipUtil.class);
+	private static Logger log = LoggerFactory.getLogger(ZipUtil.class);
 
 	/**
 	 * 压缩多个文件或目录。可以指定多个单独的文件或目录。
