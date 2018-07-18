@@ -236,7 +236,8 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
         try {
             for(T t:list){
                 t.preSave();
-                i+=batchSession.update(excuMethod,t);
+                i++;
+                batchSession.update(excuMethod,t);
                 if ((i + 1) % BATCH_LIMIT == 0){
                     batchSession.flushStatements();
                     LOG.debug(String.format("%s batch %s data sizes",excuMethod,i));
@@ -268,7 +269,8 @@ public abstract class BaseService<T extends BaseBean,M extends BaseMapper> imple
         try {
             for(T t:list){
                 t.preSave();
-                i+=batchSession.insert(excuMethod,t);
+                i++;
+                batchSession.insert(excuMethod,t);
                 if ((i + 1) % BATCH_LIMIT == 0){
                     batchSession.flushStatements();
                     LOG.debug(String.format("%s batch %s data sizes",excuMethod,i));
