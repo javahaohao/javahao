@@ -92,4 +92,12 @@ public class UserSpace {
     public static void setToken(Token token) {
         UserSpace.token.set(token);
     }
+
+    /**
+     * 获取当前凭证
+     * @return 凭证信息
+     */
+    public static Token getToken(){
+        return token.get();
+    }
 }
