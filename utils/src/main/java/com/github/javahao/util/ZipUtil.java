@@ -57,6 +57,7 @@ public class ZipUtil {
 		} finally {
 			try {
 				assert zipOutput != null;
+				zipOutput.closeEntry();
 				zipOutput.close();
 			} catch (Exception e) {
 				log.error("异常", e);
@@ -168,7 +169,8 @@ public class ZipUtil {
 	// 主函数，用于测试ZipFileUtils类
 	public static void main(String[] args) throws Exception {
 		System.out.println("开始解压");
-		ZipUtil.unZip("E:\\temp\\酒店页面.zip", "E:\\temp\\");
+//		ZipUtil.unZip("E:\\temp\\酒店页面.zip", "E:\\temp\\");
+		ZipUtil.antzip("F:\\upload\\template-code\\1536934700165","F:\\upload\\template-code\\1536934700165.zip",false);
 		System.out.println("解压end");
 	}
 
@@ -390,12 +392,10 @@ public class ZipUtil {
 			ZipEntry entry = new ZipEntry(fileName);
 			entry.setTime(file.lastModified());
 			zipOutput.putNextEntry(entry);
-			zipOutput.closeEntry();
 			String fileNames[] = file.list();
 			if (ObjectUtils.isNotEmpty(fileNames)) {
 				for (String fileName2 : fileNames)
 					antzipFiles(new File(file, fileName2), zipOutput, fileName);
-				zipOutput.closeEntry();
 			}
 		} else {
 			ZipEntry jarEntry = new ZipEntry(fileName);
@@ -408,8 +408,8 @@ public class ZipUtil {
 			while ((len = in.read(buf)) >= 0)
 				zipOutput.write(buf, 0, len);
 			in.close();
-			zipOutput.closeEntry();
 		}
+//		zipOutput.closeEntry();
 	}
 
 	/**
