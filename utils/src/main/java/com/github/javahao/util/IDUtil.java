@@ -3,6 +3,7 @@ package com.github.javahao.util;
 import java.util.UUID;
 
 public class IDUtil{
+	private static final SnowflakeIdWorker snowflakeIdWorker = new SnowflakeIdWorker(0, 0);
 	/**
 	 * 创建uuid
 	 * @return uuid
@@ -16,6 +17,6 @@ public class IDUtil{
 	 * @return id
 	 */
 	public static long snkwflakeId(){
-		return new SnowflakeIdWorker(0, 0).nextId();
+		return snowflakeIdWorker.nextId();
 	}
 }
